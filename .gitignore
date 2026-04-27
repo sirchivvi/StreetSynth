@@ -9,3 +9,5 @@ lama/
 big-lama/
 .env
 venv/
+test_images/
+outputs/
