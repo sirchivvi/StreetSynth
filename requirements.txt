@@ -1,6 +1,6 @@
 torch>=2.0.0
 torchvision
-transformers==4.44.2
+transformers==4.46.0
 timm
 omegaconf
 pytorch-lightning==1.9.5
