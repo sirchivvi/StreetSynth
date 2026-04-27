@@ -19,3 +19,5 @@ torch-fidelity
 opencv-python-headless
 requests
 regex
+gradio==4.44.1
+gradio-client==1.3.0
