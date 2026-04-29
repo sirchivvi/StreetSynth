@@ -1,24 +1,32 @@
 import torch
 import numpy as np
+from transformers import DPTForDepthEstimation, DPTImageProcessor
 
 class DepthEstimator:
     def __init__(self, device="cuda"):
         self.device = device
-        self.model = torch.hub.load(
-            "intel-isl/MiDaS", "DPT_Large", trust_repo=True)
-        self.model.eval().to(device)
-        self.transform = torch.hub.load(
-            "intel-isl/MiDaS", "transforms",
-            trust_repo=True).dpt_transform
+
+        self.processor = DPTImageProcessor.from_pretrained("Intel/dpt-large")
+        self.model = DPTForDepthEstimation.from_pretrained("Intel/dpt-large")
+
+        self.model.to(self.device)
+        self.model.eval()
 
     def predict(self, img_np):
-        batch = self.transform(img_np).to(self.device)
+        inputs = self.processor(images=img_np, return_tensors="pt").to(self.device)
+
         with torch.inference_mode():
-            depth = self.model(batch)
+            outputs = self.model(**inputs)
+            predicted_depth = outputs.predicted_depth
+
             depth = torch.nn.functional.interpolate(
-                depth.unsqueeze(1),
+                predicted_depth.unsqueeze(1),
                 size=img_np.shape[:2],
-                mode="bicubic", align_corners=False
+                mode="bicubic",
+                align_corners=False
             ).squeeze()
+
         depth = depth.cpu().numpy()
-        return (depth - depth.min()) / (depth.max() - depth.min())
+
+        # normalize
+        return (depth - depth.min()) / (depth.max() - depth.min() + 1e-8)
