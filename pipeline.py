@@ -44,7 +44,7 @@ class StreetSynthPipeline:
             self.generator = None
             print("No AccessNet checkpoint — pipeline will run up to placement only")
 
-        print("Pipeline ready ✓")
+        print("Pipeline ready [OK]")
 
     # ── Model loaders ──────────────────────────────────────────────────────
     def _load_lama(self):

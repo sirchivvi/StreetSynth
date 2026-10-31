@@ -1,13 +1,36 @@
+# Byte-compiled / optimized / ambient
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+
+# PyTorch checkpoints & weights
 *.pt
 *.ckpt
 *.zip
-outputs/
 checkpoints/
 lama/
 big-lama/
-.env
-venv/
-test_images/
+
+# Runtime outputs & test images
 outputs/
+test_images/
+
+# Virtual Environments
+venv/
+env/
+ENV/
+
+# Node & Frontend
+node_modules/
+frontend/node_modules/
+frontend/dist/
+dist/
+
+# Environment Variables & Local Secrets
+.env
+.env.local
+.env.*.local
+
+# OS Artifacts
+.DS_Store
+Thumbs.db

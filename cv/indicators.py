@@ -42,7 +42,7 @@ def format_indicators(indicators: dict) -> str:
     lines = ["ACCESSIBILITY INDICATORS", "=" * 30]
     for key in ["connectivity", "comfort", "mobility"]:
         ind = indicators[key]
-        bar = "█" * ind["score"] + "░" * (ind["max"] - ind["score"])
+        bar = "#" * ind["score"] + "-" * (ind["max"] - ind["score"])
         lines.append(f"{key.upper():15s} [{bar}] {ind['score']}/{ind['max']}")
         lines.append(f"  {ind['reason']}")
     lines.append("=" * 30)
